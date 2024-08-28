@@ -17,18 +17,17 @@ const app = express()
 
 
 
-
-
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: ["'self'"], // Allow resources from the same origin
       scriptSrc: ["'self'", "blob:"], // Allow scripts from the same origin and blobs
-      objectSrc: ["'none'"],
-      imgSrc: ["'self'", "data:"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      connectSrc: ["'self'"],
-      // Add other directives as needed
+      scriptSrcElem: ["'self'", "blob:"], // Explicitly allow blob script elements
+      imgSrc: ["'self'", "data:"], // Allow images from the same origin and inline data
+      styleSrc: ["'self'", "'unsafe-inline'"], // Allow styles from the same origin and inline styles
+      connectSrc: ["'self'", "https:"], // Allow connections to the same origin and HTTPS
+      objectSrc: ["'none'"], // Disallow all <object> embeds
+      baseUri: ["'self'"], // Disallow <base> URI changes
     },
   })
 );
@@ -43,13 +42,14 @@ app.use(express.urlencoded({extended:true}))
 
 app.use(cors({
   origin : process.env.FRONTEND_BASE_URL,
-  credentials:true
+  credentials:true ,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }))
 
 app.use(express.static(path.join(__dirname, '../../frontendbooking/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname));
+  res.sendFile(path.join(__dirname, '../../frontendbooking/dist'));
 });
 app.use('/api/users',userRouter)
 app.use('/api/auth',authRouter)
