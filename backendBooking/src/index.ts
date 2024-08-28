@@ -47,6 +47,10 @@ app.use(cors({
 }))
 
 app.use(express.static(path.join(__dirname, '../../frontendbooking/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontendBooking/dist', 'index.html'));
+});
 app.use('/api/users',userRouter)
 app.use('/api/auth',authRouter)
 
