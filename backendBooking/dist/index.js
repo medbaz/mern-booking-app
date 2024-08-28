@@ -11,8 +11,20 @@ const user_routs_1 = __importDefault(require("./routs/user.routs"));
 const auth_routs_1 = __importDefault(require("./routs/auth.routs"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
+const helmet_1 = __importDefault(require("helmet"));
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
+app.use(helmet_1.default.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "blob:"], // Allow scripts from the same origin and blobs
+        objectSrc: ["'none'"],
+        imgSrc: ["'self'", "data:"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        connectSrc: ["'self'"],
+        // Add other directives as needed
+    },
+}));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -21,6 +33,9 @@ app.use((0, cors_1.default)({
     credentials: true
 }));
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontendbooking/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname));
+});
 app.use('/api/users', user_routs_1.default);
 app.use('/api/auth', auth_routs_1.default);
 mongoose_1.default.connect(process.env.DB_CONNECTION_SETUP).then(() => {
