@@ -7,6 +7,8 @@ import authRouter from './routs/auth.routs'
 import cookieParser from 'cookie-parser';
 import path from "path"
 
+const PORT = process.env.PORT || 3000;
+
 const app = express()
 
 app.use(cookieParser())
@@ -28,7 +30,7 @@ app.use('/api/auth',authRouter)
 mongoose.connect(process.env.DB_CONNECTION_SETUP as string).then(()=>{
 
     console.log("connected",process.env.DB_CONNECTION_SETUP)
-    app.listen(3000)
+    app.listen(PORT)
   }
   ).catch(()=>{
     console.log("not connected to te DB")
