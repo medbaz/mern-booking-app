@@ -34,9 +34,9 @@ app.use((0, cors_1.default)({
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }));
-app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontendbooking/dist')));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontendBooking/dist')));
 app.get('*', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../frontendbooking/dist'));
+    res.sendFile(path_1.default.join(__dirname, '../../frontendBooking/dist'));
 });
 app.use('/api/users', user_routs_1.default);
 app.use('/api/auth', auth_routs_1.default);

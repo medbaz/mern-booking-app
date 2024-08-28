@@ -46,10 +46,10 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }))
 
-app.use(express.static(path.join(__dirname, '../../frontendbooking/dist')));
+app.use(express.static(path.join(__dirname, '../../frontendBooking/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontendbooking/dist'));
+  res.sendFile(path.join(__dirname, '../../frontendBooking/dist'));
 });
 app.use('/api/users',userRouter)
 app.use('/api/auth',authRouter)
