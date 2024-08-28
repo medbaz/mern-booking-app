@@ -6,10 +6,36 @@ import userRouter from './routs/user.routs'
 import authRouter from './routs/auth.routs'
 import cookieParser from 'cookie-parser';
 import path from "path"
+import helmet from 'helmet'
+
 
 const PORT = process.env.PORT || 3000;
 
 const app = express()
+
+
+
+
+
+
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "blob:"], // Allow scripts from the same origin and blobs
+      objectSrc: ["'none'"],
+      imgSrc: ["'self'", "data:"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      connectSrc: ["'self'"],
+      // Add other directives as needed
+    },
+  })
+);
+
+
+
+
 
 app.use(cookieParser())
 app.use(express.json())
