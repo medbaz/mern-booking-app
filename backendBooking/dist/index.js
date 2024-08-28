@@ -11,6 +11,7 @@ const user_routs_1 = __importDefault(require("./routs/user.routs"));
 const auth_routs_1 = __importDefault(require("./routs/auth.routs"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
+const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
@@ -24,7 +25,7 @@ app.use('/api/users', user_routs_1.default);
 app.use('/api/auth', auth_routs_1.default);
 mongoose_1.default.connect(process.env.DB_CONNECTION_SETUP).then(() => {
     console.log("connected", process.env.DB_CONNECTION_SETUP);
-    app.listen(3000);
+    app.listen(PORT);
 }).catch(() => {
     console.log("not connected to te DB");
 });
