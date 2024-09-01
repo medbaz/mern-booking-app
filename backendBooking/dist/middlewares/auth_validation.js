@@ -7,7 +7,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
 const auth_validation = (req, res, next) => {
     const token = req.cookies['auth_token'];
-    console.log('this is the token from controllers', token);
+    console.log('token retreived from cookie');
     if (!token) {
         return res.status(401).json({ message: 'authentification not granted ther is no token' });
     }

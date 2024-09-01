@@ -7,13 +7,21 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 require("dotenv/config");
 const mongoose_1 = __importDefault(require("mongoose"));
+// ROUTES
 const user_routs_1 = __importDefault(require("./routs/user.routs"));
 const auth_routs_1 = __importDefault(require("./routs/auth.routs"));
+const hotels_routs_1 = __importDefault(require("./routs/hotels.routs"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
 const helmet_1 = __importDefault(require("helmet"));
+const cloudinary_1 = require("cloudinary");
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
+cloudinary_1.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 app.use(helmet_1.default.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self'"], // Allow resources from the same origin
@@ -40,6 +48,7 @@ app.get('*', (req, res) => {
 });
 app.use('/api/users', user_routs_1.default);
 app.use('/api/auth', auth_routs_1.default);
+app.use('/api/myHotels', hotels_routs_1.default);
 mongoose_1.default.connect(process.env.DB_CONNECTION_SETUP).then(() => {
     console.log("connected", process.env.DB_CONNECTION_SETUP);
     app.listen(PORT);

@@ -7,8 +7,10 @@ export type response_TYPE = {
     userId:string
 }
 
-export const register = async (formData:LoginformTypes)=>{
 
+
+// REGISTER REQUEST
+export const register = async (formData:LoginformTypes)=>{
     const response = await  fetch(`${VITE_API_BASE_URL}/api/auth/sign_up`, {
         method:'POST',
         credentials:'include',
@@ -22,14 +24,14 @@ export const register = async (formData:LoginformTypes)=>{
 
     if (!response.ok) {
        throw new Error(responseBody.message);
-       
-        
     }
    return responseBody ;
 }
 
-export const signIn = async (formData:SigninformTypes)=>{
 
+
+// SIGN IN REQUEST
+export const signIn = async (formData:SigninformTypes)=>{
     const response = await  fetch(`${VITE_API_BASE_URL}/api/auth/login`, {
         method:'POST',
         credentials:'include',
@@ -43,13 +45,13 @@ export const signIn = async (formData:SigninformTypes)=>{
 
     if (!response.ok) {
        throw new Error(responseBody.message);
-       
-        
     }
    return responseBody ;
 }
 
 
+
+// TOKEN VALIDATION
 export const validate_Token = async () => {
     const response =  await fetch(`${VITE_API_BASE_URL}/api/auth/validation`,{
         credentials:'include',
@@ -64,7 +66,6 @@ export const validate_Token = async () => {
         console.log(tokenResponse.message);
         
          throw new Error(tokenResponse.message);
-        
     }
     console.log(tokenResponse);
     return tokenResponse ;
@@ -72,6 +73,8 @@ export const validate_Token = async () => {
 }
 
 
+
+// LOG OUT USER
 export const logoutUser = async () => {
     const response = await fetch(`${VITE_API_BASE_URL}/api/auth/logout`,{
         credentials:'include',
@@ -83,7 +86,23 @@ export const logoutUser = async () => {
         
      throw new Error("Not logged out yet");
     }
+}
 
-    
-    
+
+
+
+
+// HOTEL LOGIC
+export const addMyHotel = async (hotelFormData:FormData) => {
+    const response = await fetch(`${VITE_API_BASE_URL}/api/myHotels`,{
+        method:"POST",
+        credentials:'include',
+        body:hotelFormData ,
+    })
+
+    if (!response.ok) {
+        throw new Error("Unable to Save Hotel");
+        
+    }
+    return response.json()
 }

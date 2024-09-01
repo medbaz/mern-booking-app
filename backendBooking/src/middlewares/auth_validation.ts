@@ -15,7 +15,7 @@ declare global  {
 
 const auth_validation = (req:Request,res:Response,next:NextFunction)=>{
     const token =  req.cookies['auth_token']
-console.log('this is the token from controllers',token);
+    console.log('token retreived from cookie');
 
     if (!token) {
         return res.status(401).json({message:'authentification not granted ther is no token'})

@@ -11,8 +11,7 @@ type ToastMessage = {
 
 type AppContext = {
     showToast : (toastMessage:ToastMessage)=> void ,
-    isLoggedIn : boolean
-}
+    isLoggedIn : boolean}
 
 type childrenType = {
     children : React.ReactNode

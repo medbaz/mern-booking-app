@@ -2,18 +2,28 @@ import express , {Request,Response} from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 import mongoose from 'mongoose'
+// ROUTES
 import userRouter from './routs/user.routs'
 import authRouter from './routs/auth.routs'
+import hotelsRouter from './routs/hotels.routs'
+
 import cookieParser from 'cookie-parser';
 import path from "path"
 import helmet from 'helmet'
+import { v2 as cloudinary } from 'cloudinary'
+
+
 
 
 const PORT = process.env.PORT || 3000;
-
 const app = express()
 
 
+cloudinary.config({
+  cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:process.env.CLOUDINARY_API_KEY,
+  api_secret:process.env.CLOUDINARY_API_SECRET
+})
 
 
 
@@ -46,15 +56,17 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }))
 
-app.use(express.static(path.join(__dirname, '../../frontendBooking/dist')));
 
+
+app.use(express.static(path.join(__dirname, '../../frontendBooking/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../frontendBooking/dist'));
 });
+
+
 app.use('/api/users',userRouter)
 app.use('/api/auth',authRouter)
-
-
+app.use('/api/myHotels',hotelsRouter)
 
 
 mongoose.connect(process.env.DB_CONNECTION_SETUP as string).then(()=>{
