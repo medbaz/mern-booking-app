@@ -4,6 +4,7 @@ import Layout from './layout/layout';
 import Homme from './components/Homme';
 import About from './components/About.tsx';
 import Bookings from './components/Bookings';
+import AddHotels from './components/AddHotels.tsx';
 import Hotels from './components/Hotels.tsx';
 import SignIn from "./components/SignIn.tsx";
 import SignUp from "./components/SignUp.tsx";
@@ -18,14 +19,14 @@ function App() {
   return (
       <Router>
         <Routes >
-    
-          
             <Route index path='/' element={<Layout> <Homme/></Layout>}>
             </Route>
 
               <Route path='myBookings' element={<Layout>{isLoggedIn ?<Bookings/>: <Navigate to={'/Sign In'}/>}</Layout>}>
               </Route>
 
+              <Route path='addHotels' element={<Layout>{isLoggedIn ? <AddHotels/> : <Navigate to={'/Sign In'}/>}</Layout>}>
+              </Route>
               <Route path='myHotels' element={<Layout>{isLoggedIn ? <Hotels/> : <Navigate to={'/Sign In'}/>}</Layout>}>
               </Route>
             

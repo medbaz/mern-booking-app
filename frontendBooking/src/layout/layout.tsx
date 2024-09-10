@@ -10,12 +10,13 @@ interface Props {
 
 function Layout({children}:Props) {
   return (
-    <div className="flex  flex-col min-h-screen">
+    <div className="flex  flex-col min-w-[575px] min-h-screen">
       <Header />
       
-      <main className="w-full h-screen mx-auto">
+      <main className="w-full min-h-screen mb-20 mx-auto">
       {children}
       </main>
+      
       <Footer />
     </div>
   );

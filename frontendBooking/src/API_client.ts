@@ -106,3 +106,16 @@ export const addMyHotel = async (hotelFormData:FormData) => {
     }
     return response.json()
 }
+
+
+export const fetchHotels = async () => {
+    const response = await fetch(`${VITE_API_BASE_URL}/api/myHotels`,{
+        credentials:'include',
+    })
+
+    if (!response.ok) {
+        throw new Error("Unable to get Hotels");
+        
+    }
+    return response.json()
+}

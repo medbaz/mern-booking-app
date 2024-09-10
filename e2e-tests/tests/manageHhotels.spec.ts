@@ -1,6 +1,7 @@
 import { expect ,test } from "@playwright/test";
 import path from "path";
 
+
 test.beforeEach(async({page})=>{
     const URL = "http://localhost:5173/";
     await page.goto(URL)
@@ -17,8 +18,9 @@ test.beforeEach(async({page})=>{
 
 })
 
+
 test('should be able to add hotel ', async({page}) => { 
-    await page.goto('http://localhost:5173/myHotels')
+    await page.goto(`http://localhost:5173/addHotels`)
     await page.locator('[name=name]').fill('test name')
     await page.locator('[name=city]').fill('test city')
     await page.locator('[name=country]').fill('test country')
@@ -27,11 +29,27 @@ test('should be able to add hotel ', async({page}) => {
     await page.selectOption('select[name=starRating]',"4")
     await page.getByText('Resort').click()
     await page.getByRole('checkbox',{name:'Gym'}).click()
-    await page.locator('[name=adultCount]').fill("2")
+    await page.locator('[name=adultCount]').fill("4")
     await page.locator('[name=childCount]').fill("2")
     await page.setInputFiles('[name=imageFiles]',[
                 path.join(__dirname,'files','1.png'),
                 path.join(__dirname,'files','2.png')
                 ])
     await page.getByRole('button',{name:"Save"}).click()
+ })
+
+
+
+ test('shoud display hotels',async ({page})=>{
+    await page.goto(`http://localhost:5173/myHotels`)
+    await expect(page.getByRole('heading',{name:'Hotels'})).toBeVisible()
+    await expect(page.getByRole('button',{name:'Create Hotel'})).toBeVisible()
+    await expect(page.getByText("this is the test text in order to")).toBeVisible()
+    await expect(page.getByText(' test country')).toBeVisible()
+    await expect(page.getByText('test city')).toBeVisible()
+    await expect(page.getByText('Resort')).toBeVisible()
+    await expect(page.getByText('$4')).toBeVisible()
+
+    await page.getByRole('link',{name:"Create"})
+
  })

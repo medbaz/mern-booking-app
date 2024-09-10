@@ -1,5 +1,5 @@
 import multer from "multer";
-import { getHotels ,deletAll } from "../controllers/hotels.controllers";
+import { postHotels ,deletAll,getHotels } from "../controllers/hotels.controllers";
 import express from "express";
 import auth_validation from "../middlewares/auth_validation";
 import { body } from "express-validator";
@@ -34,8 +34,10 @@ router.post(
   ],
   auth_validation,
   upload.array("imageFiles", 6),
-  getHotels
+  postHotels
 );
+
+router.get('/', auth_validation,getHotels)
 
 
 router.post(

@@ -1,7 +1,7 @@
 
 const Footer:React.FC=()=>{
   return (
-    <footer className=" fixed bg-gray-800 flex bottom-0 container  p-4 ">
+    <footer className=" w-full fixed bg-gray-800 flex bottom-0   p-4 ">
     <div className="flex items-center mx-auto text-center text-white">
       <p>&copy; 2024 My Website. All rights reserved.</p>
       <p className="ml-4">
