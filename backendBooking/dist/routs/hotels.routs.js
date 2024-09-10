@@ -30,6 +30,7 @@ router.post("/", [
         .notEmpty()
         .isArray()
         .withMessage("Facilities must be an array"),
-], auth_validation_1.default, upload.array("imageFiles", 6), hotels_controllers_1.getHotels);
+], auth_validation_1.default, upload.array("imageFiles", 6), hotels_controllers_1.postHotels);
+router.get('/', auth_validation_1.default, hotels_controllers_1.getHotels);
 router.post("/deleteAll", hotels_controllers_1.deletAll);
 exports.default = router;

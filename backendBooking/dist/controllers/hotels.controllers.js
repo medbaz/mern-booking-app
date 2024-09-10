@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletAll = exports.getHotels = void 0;
+exports.getHotels = exports.deletAll = exports.postHotels = void 0;
 const cloudinary_1 = __importDefault(require("cloudinary"));
 const hotel_model_1 = __importDefault(require("../models/hotel.model"));
-const getHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const postHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const imageFiles = req.files;
         const newHotel = req.body;
@@ -40,6 +40,17 @@ const getHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         res.status(500).json({ message: error });
+    }
+});
+exports.postHotels = postHotels;
+const getHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const hotels = yield hotel_model_1.default.find({ userId: req.userId });
+        res.send(hotels);
+        // console.log(hotels);
+    }
+    catch (error) {
+        res.status(400).json({ message: "UNABLE to get hotels" });
     }
 });
 exports.getHotels = getHotels;
