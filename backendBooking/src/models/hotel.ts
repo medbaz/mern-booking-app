@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import {model,Schema} from "mongoose";
 
 
 export interface hotelFormType  {
@@ -19,7 +19,7 @@ export interface hotelFormType  {
 }
 
 
-const hotelSchema = new mongoose.Schema({
+const hotelSchema = new Schema({
 
     userId:{
         type:String,
@@ -84,5 +84,5 @@ const hotelSchema = new mongoose.Schema({
 )
 
 
-const Hotel = mongoose.model('Hotel',hotelSchema)
+const Hotel = model('Hotel',hotelSchema)
 export default Hotel
