@@ -14,27 +14,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHotels = exports.deletAll = exports.postHotels = void 0;
 const cloudinary_1 = __importDefault(require("cloudinary"));
-const hotel_model_1 = __importDefault(require("../models/hotel.model"));
+const hotel_1 = __importDefault(require("../models/hotel"));
 const postHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const imageFiles = req.files;
         const newHotel = req.body;
         // UPLOAD THE IMAGES TO CLOUDINARY
         const uploadPromises = imageFiles.map((image) => new Promise((resolve, reject) => {
-            cloudinary_1.default.v2.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+            cloudinary_1.default.v2.uploader
+                .upload_stream({ resource_type: "image" }, (error, result) => {
                 if (error) {
                     reject(error);
                 }
                 else {
                     resolve(result.url);
                 }
-            }).end(image.buffer);
+            })
+                .end(image.buffer);
         }));
         const imageURLS = yield Promise.all(uploadPromises);
         newHotel.imageUrls = imageURLS;
         newHotel.lastUpdated = new Date();
         newHotel.userId = req.userId;
-        const hotel = new hotel_model_1.default(newHotel);
+        const hotel = new hotel_1.default(newHotel);
         hotel.save();
         res.status(200).json({ message: "form submitted successfully " });
     }
@@ -45,7 +47,7 @@ const postHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.postHotels = postHotels;
 const getHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const hotels = yield hotel_model_1.default.find({ userId: req.userId });
+        const hotels = yield hotel_1.default.find({ userId: req.userId });
         res.send(hotels);
         // console.log(hotels);
     }
@@ -56,7 +58,7 @@ const getHotels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getHotels = getHotels;
 const deletAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield hotel_model_1.default.deleteMany({});
+        yield hotel_1.default.deleteMany({});
         res.status(200).json({ message: "hotels deleted successfully" });
     }
     catch (error) {
