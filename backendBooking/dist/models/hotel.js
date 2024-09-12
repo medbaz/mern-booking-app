@@ -1,4 +1,5 @@
 "use strict";
+// import mongoose from "mongoose";
 Object.defineProperty(exports, "__esModule", { value: true });
 // const hotelSchema = new mongoose.Schema({
 //     userId:{
