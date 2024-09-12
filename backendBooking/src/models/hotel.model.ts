@@ -19,7 +19,7 @@ export interface hotelFormType  {
 }
 
 
-const hotelSchema = new mongoose.Schema<hotelFormType>({
+const hotelSchema = new mongoose.Schema({
 
     userId:{
         type:String,
@@ -83,5 +83,5 @@ const hotelSchema = new mongoose.Schema<hotelFormType>({
 )
 
 
-const Hotel = mongoose.model<hotelFormType>('Hotel',hotelSchema)
+const Hotel = mongoose.model('Hotel',hotelSchema)
 export default Hotel
