@@ -13,7 +13,6 @@ const auth_routs_1 = __importDefault(require("./routs/auth.routs"));
 const hotels_routs_1 = __importDefault(require("./routs/hotels.routs"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
-const helmet_1 = __importDefault(require("helmet"));
 const cloudinary_1 = require("cloudinary");
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
@@ -22,18 +21,6 @@ cloudinary_1.v2.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-app.use(helmet_1.default.contentSecurityPolicy({
-    directives: {
-        defaultSrc: ["'self'"], // Allow resources from the same origin
-        scriptSrc: ["'self'", "blob:"], // Allow scripts from the same origin and blobs
-        scriptSrcElem: ["'self'", "blob:"], // Explicitly allow blob script elements
-        imgSrc: ["'self'", "data:"], // Allow images from the same origin and inline data
-        styleSrc: ["'self'", "'unsafe-inline'"], // Allow styles from the same origin and inline styles
-        connectSrc: ["'self'", "https:"], // Allow connections to the same origin and HTTPS
-        objectSrc: ["'none'"], // Disallow all <object> embeds
-        baseUri: ["'self'"], // Disallow <base> URI changes
-    },
-}));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));

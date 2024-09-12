@@ -37,6 +37,7 @@ router.post(
   postHotels
 );
 
+
 router.get('/', auth_validation,getHotels)
 
 

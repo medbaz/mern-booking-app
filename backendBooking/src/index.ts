@@ -9,7 +9,6 @@ import hotelsRouter from './routs/hotels.routs'
 
 import cookieParser from 'cookie-parser';
 import path from "path"
-import helmet from 'helmet'
 import { v2 as cloudinary } from 'cloudinary'
 
 
@@ -27,20 +26,6 @@ cloudinary.config({
 
 
 
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"], // Allow resources from the same origin
-      scriptSrc: ["'self'", "blob:"], // Allow scripts from the same origin and blobs
-      scriptSrcElem: ["'self'", "blob:"], // Explicitly allow blob script elements
-      imgSrc: ["'self'", "data:"], // Allow images from the same origin and inline data
-      styleSrc: ["'self'", "'unsafe-inline'"], // Allow styles from the same origin and inline styles
-      connectSrc: ["'self'", "https:"], // Allow connections to the same origin and HTTPS
-      objectSrc: ["'none'"], // Disallow all <object> embeds
-      baseUri: ["'self'"], // Disallow <base> URI changes
-    },
-  })
-);
 
 
 
