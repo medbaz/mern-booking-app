@@ -1,5 +1,5 @@
 import multer from "multer";
-import { postHotels ,deletAll,getHotels } from "../controllers/hotels.controllers";
+import { postHotels ,deletAll,getHotels ,getHotelById  ,editHotelById} from "../controllers/hotels.controllers";
 import express from "express";
 import auth_validation from "../middlewares/auth_validation";
 import { body } from "express-validator";
@@ -38,7 +38,17 @@ router.post(
 );
 
 
+// GET HOTELS
 router.get('/', auth_validation,getHotels)
+
+
+// GET HOTEL BY ID
+router.get('/:id', auth_validation,getHotelById)
+
+
+// EDIT HOTEL BY ID
+router.put('/:id', auth_validation,upload.array('imageFiles',6),editHotelById)
+
 
 
 router.post(

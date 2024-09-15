@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { hotelFormType } from "../../../backendBooking/src/models/hotel";
+import { Link } from "react-router-dom";
 
 interface HotelCardProps {
   Hotel: hotelFormType;
@@ -48,8 +49,8 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
           {Hotel.imageUrls.map((imgUrl, index) => (
             <button
               key={imgUrl}
-              className={` w-3 h-3 bg-white  bg-opacity-50  rounded-full ${
-                currentImageIndex == index ? " bg-opacity-100" : " "
+              className={` w-3 h-3   rounded-full ${
+                currentImageIndex == index ? " bg-white  " : "bg-gray-500  "
               }`}
               onClick={() => setCurrentImageIndex(index)}
             >
@@ -59,7 +60,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
         </div>
       </div>
       {/* Details Section */}
-      <div className="">
+      <div className="flex flex-col flex-1">
         <div className=" flex mb-2 justify-between  items-center">
           <h1 className="mt-8 text-2xl font-bold text-gray-800">
             {Hotel.name}
@@ -104,6 +105,18 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
             </p>
           </div>
         </div>
+        
+        <div className=" flex w-full  justify-end mt-2 gap-2">
+          <button className=" bg-red-600  text-white font-bold py-2 px-4 rounded hover:bg-red-500 transition duration-300">
+            Delete
+          </button>
+        <Link to={`/HotelDetails/${Hotel._id}`} state={Hotel._id}>
+          <button className=" bg-blue-950  text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+            View Details
+          </button>
+          </Link>
+        </div>
+        
       </div>
     </div>
   );

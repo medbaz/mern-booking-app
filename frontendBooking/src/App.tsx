@@ -9,9 +9,11 @@ import Hotels from './components/Hotels.tsx';
 import SignIn from "./components/SignIn.tsx";
 import SignUp from "./components/SignUp.tsx";
 import { useAppContext } from './context/AppContext';
-
+ 
 
 import { BrowserRouter as Router , Routes , Route,Navigate } from 'react-router-dom';
+import HotelDetails from './components/HotelDetails.tsx';
+import EditHotels from './components/EditHotel.tsx';
 function App() {
   const {isLoggedIn} = useAppContext()
 
@@ -27,7 +29,14 @@ function App() {
 
               <Route path='addHotels' element={<Layout>{isLoggedIn ? <AddHotels/> : <Navigate to={'/Sign In'}/>}</Layout>}>
               </Route>
+
+              <Route path='editHotel/:id' element={<Layout>{isLoggedIn ? <EditHotels/> : <Navigate to={'/Sign In'}/>}</Layout>}>
+              </Route>
+
               <Route path='myHotels' element={<Layout>{isLoggedIn ? <Hotels/> : <Navigate to={'/Sign In'}/>}</Layout>}>
+              </Route>
+
+              <Route path='HotelDetails/:id' element={<Layout>{isLoggedIn ? <HotelDetails />  : <Navigate to={'/Sign In'}/>}</Layout>}>
               </Route>
             
               <Route path='Sign In' element={<Layout><SignIn/></Layout>}>

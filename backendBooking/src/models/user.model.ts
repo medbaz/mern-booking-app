@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs"
+import { hotelFormType } from "./hotel";
 
 export type userType = {
     _id: string;
@@ -46,8 +47,7 @@ UserSchema.pre('save', async function EncrypPass(next) {
 
 
 
-
-const hotelSchema = new mongoose.Schema({
+const hotelSchema = new mongoose.Schema<hotelFormType>({
 
     userId:{
         type:String,
@@ -86,8 +86,7 @@ const hotelSchema = new mongoose.Schema({
     facilities:[{
         type:String,
         required:true
-    }]
-    ,
+    }],
     pricePerNight:{
         type:Number,
         required:true
@@ -112,7 +111,7 @@ const hotelSchema = new mongoose.Schema({
 )
 
 
-export const Hotel = mongoose.model('Hotel',hotelSchema)
+export const Hotel = mongoose.model<hotelFormType>('Hotel',hotelSchema)
 
 
 

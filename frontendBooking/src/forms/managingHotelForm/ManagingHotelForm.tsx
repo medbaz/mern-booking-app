@@ -4,6 +4,8 @@ import TypesSection from "./TypesSection.tsx";
 import HotelFacilities from './FacilitiesSection.tsx'
 import GuestComponent from "./GuestsSection.tsx";
 import ImageSection from "./ImagesSection.tsx";
+import { hotelFormType } from "../../../../backendBooking/src/models/hotel.ts";
+import { useEffect } from "react";
 
 
 export type HotelsFormTypes = {
@@ -16,16 +18,17 @@ export type HotelsFormTypes = {
   starRating:number;
   facilities:string[];
   imageFiles:FileList;
+  imageUrls:string[];
   adultCount:number;
   childCount:number;
 }
 
-export type HotelProps =  { onSave: (hotelFormData: FormData) => void; isPending: boolean; }
+export type HotelProps =  { onSave?: (hotelFormData: FormData) => void; isPending?: boolean; hotel?:hotelFormType}
 
-function ManagingHotelForm({onSave,isPending}:HotelProps) {
+function ManagingHotelForm({onSave,isPending,hotel}:HotelProps) {
 
   const formMethods = useForm<HotelsFormTypes>()
-  const {handleSubmit} = formMethods
+  const {handleSubmit , reset } = formMethods
   const onSubmit = handleSubmit((formDataJson) => {
 
     const formData = new FormData()
@@ -43,11 +46,22 @@ function ManagingHotelForm({onSave,isPending}:HotelProps) {
     Array.from(formDataJson.imageFiles).forEach((imageFile)=>{
       formData.append(`imageFiles`,imageFile)
     })
-    onSave(formData)
+    formDataJson.imageUrls.forEach((image,index)=>{
+      formData.append(`imageUrls[${index}]`,image)})
+
+
+    if (onSave) {
+      onSave(formData)
+    }
+
     
     });
 
     
+    useEffect(() => {
+      reset(hotel);
+    }, [reset, hotel]);
+
 
   return (
     <FormProvider {...formMethods} >

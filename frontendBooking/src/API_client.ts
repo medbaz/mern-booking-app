@@ -1,5 +1,6 @@
 import {LoginformTypes} from './components/SignUp';
 import {SigninformTypes} from './components/SignIn';
+import { hotelFormType } from '../../backendBooking/src/models/hotel';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -93,6 +94,8 @@ export const logoutUser = async () => {
 
 
 // HOTEL LOGIC
+
+// ADD HOTEL
 export const addMyHotel = async (hotelFormData:FormData) => {
     const response = await fetch(`${VITE_API_BASE_URL}/api/myHotels`,{
         method:"POST",
@@ -108,6 +111,27 @@ export const addMyHotel = async (hotelFormData:FormData) => {
 }
 
 
+// EDIT HOTEL BY ID 
+
+export const editHotelById = async (hotelFormData:FormData,id:string ):Promise<hotelFormType> => {
+    const response = await fetch(`${VITE_API_BASE_URL}/api/myHotels/${id}`,{
+        method:"PUT",
+        credentials:'include',
+        body:hotelFormData
+    })
+
+
+    if (!response.ok) {
+        
+        throw new Error("Unable to Edite Hotel");
+        
+    }
+    // Error! Failed to execute 'json' on 'Response': body stream already read
+
+    return response.json()
+}
+
+// FETCH HOTELS
 export const fetchHotels = async () => {
     const response = await fetch(`${VITE_API_BASE_URL}/api/myHotels`,{
         credentials:'include',
@@ -119,3 +143,25 @@ export const fetchHotels = async () => {
     }
     return response.json()
 }
+
+
+
+// GET HOTEL BY ID 
+
+export const fetchHotelById = async (id:string ):Promise<hotelFormType> => {
+    const response = await fetch(`${VITE_API_BASE_URL}/api/myHotels/${id}`,{
+        credentials:'include',
+    })
+
+    if (!response.ok) {
+        
+        throw new Error("Unable to get Hotels");
+        
+    }
+    
+    return response.json()
+}
+
+
+
+
