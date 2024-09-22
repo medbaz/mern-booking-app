@@ -18,25 +18,25 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const UserSchema = new mongoose_1.default.Schema({
     firstname: {
         type: String,
-        required: true
+        required: true,
     },
     lastname: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 });
-UserSchema.pre('save', function EncrypPass(next) {
+UserSchema.pre("save", function EncrypPass(next) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (this.isModified('password')) {
+        if (this.isModified("password")) {
             this.password = yield bcryptjs_1.default.hash(this.password, 10);
         }
         next();
@@ -45,58 +45,61 @@ UserSchema.pre('save', function EncrypPass(next) {
 const hotelSchema = new mongoose_1.default.Schema({
     userId: {
         type: String,
-        required: true
+        required: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
     city: {
         type: String,
-        required: true
+        required: true,
     },
     country: {
         type: String,
-        required: true
+        required: true,
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
     type: {
         type: String,
-        required: true
+        required: true,
     },
     adultCount: {
         type: Number,
-        required: true
+        required: true,
     },
     childCount: {
-        type: Number,
-        required: true
+        type: Number
     },
-    facilities: [{
+    facilities: [
+        {
             type: String,
-            required: true
-        }],
+            required: true,
+        },
+    ],
     pricePerNight: {
         type: Number,
-        required: true
+        required: true,
     },
     starRating: {
         type: Number,
         required: true,
         min: 1,
-        max: 5
+        max: 5,
     },
-    imageUrls: [{
+    imageUrls: [
+        {
             type: String,
-            required: true
-        }],
+            required: true,
+        },
+    ],
     lastUpdated: {
         type: Date,
-        required: true
-    }
+        required: true,
+    },
 });
-exports.Hotel = mongoose_1.default.model('Hotel', hotelSchema);
-exports.UsersModels = mongoose_1.default.model('UsersModels', UserSchema);
+exports.Hotel = mongoose_1.default.model("Hotel", hotelSchema);
+exports.UsersModels = mongoose_1.default.model("UsersModels", UserSchema);

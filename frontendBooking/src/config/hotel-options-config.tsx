@@ -10,10 +10,7 @@ export const hotelTypes = [
     'Apartment',
     'Villa',
     'Cabin',
-    'Lodge',
-    'Cottage',
-    'Guest House',
-    'Extended Stay'
+
   ];
 
   export const hotelFacilities = [
@@ -29,7 +26,5 @@ export const hotelTypes = [
     'Pet Friendly',
     'Non-smoking Rooms',
     'Business Center',
-    'Laundry Service',
-    'Breakfast Included',
-    '24-hour Reception'
+
   ];

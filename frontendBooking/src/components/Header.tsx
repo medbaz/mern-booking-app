@@ -30,7 +30,7 @@ const Header:React.FC=()=>{
             <li className="hover:text-gray-200 cursor-pointer"><Link to={'/'}>Home</Link></li>
             { isLoggedIn && <>
             <li className="hover:text-gray-200 cursor-pointer"><Link to={'/myBookings'}>Bookings</Link></li>
-            <li className="hover:text-gray-200 cursor-pointer"><Link to={'/myHotels'}>Hotels</Link></li>
+            <li className="hover:text-gray-200 cursor-pointer"><Link to={'/Hotels'}>Hotels</Link></li>
             </>
             }
             <li className="hover:text-gray-200 cursor-pointer"><Link to={'/About'}>About</Link></li>

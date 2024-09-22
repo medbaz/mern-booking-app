@@ -17,7 +17,7 @@ const ImageSection:React.FC = ()=> {
    
 
     return (
-      <div className=" p-6">
+      <div  className=" p-6">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Upload Images
         </h2>
@@ -25,8 +25,8 @@ const ImageSection:React.FC = ()=> {
         <div className="mb-10 h-60 ">
            
             <div className='h-60  grid grid-cols-6 gap-2'>
-              {createdImageUrls.map((file) => (
-                <div className='relative group'>
+              {createdImageUrls.map((file,index) => (
+                <div key={index} className='relative group'>
                 <img src={file} alt="" className=' border-gray-400 border-2 h-full w-full object-cover' />
                 <button onClick={(event)=> handleDlete(event,file)} className='absolute inset-4 bg-red-700 opacity-10   group-hover:opacity-80'>Delete</button>
                 </div>

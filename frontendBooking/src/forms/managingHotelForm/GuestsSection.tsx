@@ -39,7 +39,7 @@ const GuestComponent:React.FC = ()=> {
         max={6}
         placeholder="Number of children"
         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        {...register('childCount',{required:"this field is required"})}
+        {...register('childCount')}
 
       />
     {errors.childCount && (<p className='text-red-600 font-semibold ' >{errors.childCount.message }</p>)}

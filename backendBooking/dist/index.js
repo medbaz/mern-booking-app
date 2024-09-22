@@ -10,6 +10,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 // ROUTES
 const user_routs_1 = __importDefault(require("./routs/user.routs"));
 const auth_routs_1 = __importDefault(require("./routs/auth.routs"));
+const myhotels_routs_1 = __importDefault(require("./routs/myhotels.routs"));
 const hotels_routs_1 = __importDefault(require("./routs/hotels.routs"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
@@ -35,7 +36,8 @@ app.get('*', (req, res) => {
 });
 app.use('/api/users', user_routs_1.default);
 app.use('/api/auth', auth_routs_1.default);
-app.use('/api/myHotels', hotels_routs_1.default);
+app.use('/api/myHotels', myhotels_routs_1.default);
+app.use('/api/hotels', hotels_routs_1.default);
 mongoose_1.default.connect(process.env.DB_CONNECTION_SETUP).then(() => {
     console.log("connected", process.env.DB_CONNECTION_SETUP);
     app.listen(PORT);

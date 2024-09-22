@@ -1,6 +1,4 @@
 
-
-
 export interface hotelFormType  {
     _id:string;
     userId:string;
@@ -16,6 +14,15 @@ export interface hotelFormType  {
     starRating:number; 
     imageUrls:string[];
     lastUpdated:Date;
+}
+
+export interface searchHotelsType {
+    data : hotelFormType[];
+    pagination:{
+        total:number;
+        page:number;
+        pages:number;
+    }
 }
 
 

@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 // ROUTES
 import userRouter from './routs/user.routs'
 import authRouter from './routs/auth.routs'
+import myhotelsRouter from './routs/myhotels.routs'
 import hotelsRouter from './routs/hotels.routs'
 
 import cookieParser from 'cookie-parser';
@@ -51,7 +52,8 @@ app.get('*', (req, res) => {
 
 app.use('/api/users',userRouter)
 app.use('/api/auth',authRouter)
-app.use('/api/myHotels',hotelsRouter)
+app.use('/api/myHotels',myhotelsRouter)
+app.use('/api/hotels',hotelsRouter)
 
 
 mongoose.connect(process.env.DB_CONNECTION_SETUP as string).then(()=>{

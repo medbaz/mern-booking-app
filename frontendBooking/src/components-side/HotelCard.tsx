@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { hotelFormType } from "../../../backendBooking/src/models/hotel";
+import { hotelFormType } from "../../../backendBooking/src/shares/types";
 import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import * as apiQuery from "../API_client";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAppContext } from "../context/AppContext";
 
 interface HotelCardProps {
   Hotel: hotelFormType;
@@ -8,6 +12,7 @@ interface HotelCardProps {
 
 const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { showToast } = useAppContext();
 
   const handleNext = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -21,12 +26,30 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
     );
   };
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: (id: string) => apiQuery.deleteHotelByID(id),
+    onSuccess() {
+      showToast({ message: "Hotel Deleted Successfully", type: "SUCCESS" });
+      queryClient.invalidateQueries({queryKey: ['gethotels']});
+    },
+    onError() {
+      showToast({ message: "Unable To Delete Hotel", type: "ERROR" });
+    },
+  });
+
+  const handleDelete = (id: string) => {
+    console.log(id);
+
+    mutate(id);
+  };
+
   return (
     <div
       key={Hotel._id}
-      className="relative flex  min-w-[575px] max-w-3xl  mx-auto my-4 p-4 gap-6 bg-white border-gray-200 border-4 rounded-lg overflow-hidden"
+      className="relative flex  min-w-[500px] max-w-[800px] max-h-72 text-sm     p-2 gap-4 bg-white border-gray-200 border-4 rounded-lg overflow-hidden"
     >
-      <div className="relative min-w-60 min-h-full  overflow-hidden  border-gray-200 border-2 rounded-lg flex items-center justify-center">
+      <div className="relative min-w-60 h-60  overflow-hidden  border-gray-200 border-2 rounded-lg flex items-center justify-center">
         <img
           src={Hotel.imageUrls[currentImageIndex]}
           alt={`Hotel Image ${currentImageIndex + 1}`}
@@ -58,14 +81,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
             </button>
           ))}
         </div>
-      </div>
-      {/* Details Section */}
-      <div className="flex flex-col flex-1">
-        <div className=" flex mb-2 justify-between  items-center">
-          <h1 className="mt-8 text-2xl font-bold text-gray-800">
-            {Hotel.name}
-          </h1>
-          <div className="flex absolute font-bold cursor-pointer text-2xl right-3 top-1 ">
+        <div className="absolute font-bold  rounded-md bg-opacity-40 bg-blue-900 cursor-pointer text-2xl right-3 top-3 ">
             {Array.from({ length: 5 - Hotel.starRating }, (_, index) => (
               <span key={index} className="  text-gray-200 p-[2px]">
                 ★
@@ -80,22 +96,34 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
               </span>
             ))}
           </div>
+      </div>
+
+
+      {/* Details Section */}
+      <div className="grid grid-cols-1 w-full">
+        <div className=" flex  justify-between  items-center">
+          <h1 className=" text-2xl font-bold text-gray-800">
+            {Hotel.name}
+          </h1>
+          
         </div>
-        <p className="mb-8 text-gray-500 text-xs">
+        <p className="mb-4 text-gray-500 text-xs">
           {Hotel.city}, {Hotel.country}
         </p>
-        <p className="text-gray-600 mt-2 line-clamp-3 ">{Hotel.description}</p>
+        <p className="text-gray-600  line-clamp-3 ">{Hotel.description}</p>
 
-        <div className="flex mt-8 w-full justify-between items-center ">
-          <div className="  space-x-4">
-            <span className="text-gray-700">
-              <span className="font-semibold">{Hotel.adultCount}</span> adults,{" "}
-              <span className="font-semibold">{Hotel.childCount}</span> children
-            </span>
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded">
+        <div className="grid grid-cols-1  mt-3 w-full justify-between items-center ">
+          
+            <div className="text-gray-700 mb-1">
+              <span className="font-semibold">{Hotel.adultCount}</span> adults
+              <span className="font-semibold"> {Hotel.childCount && " ," } {" "}{Hotel.childCount}</span>{Hotel.childCount && " children"}
+            </div>
+            
+        
+          <div className="flex flex-1 justify-between">
+          <div className="px-2 py-1 w-fit bg-blue-100 text-blue-800 text-sm font-medium rounded">
               {Hotel.type}
-            </span>
-          </div>
+            </div>
           <div className="flex gap-1">
             <p className="text-2xl font-bold text-blue-600">
               ${Hotel.pricePerNight}
@@ -104,19 +132,23 @@ const HotelCard: React.FC<HotelCardProps> = ({ Hotel }) => {
               ${(Hotel.pricePerNight * 1.18).toFixed(0)}
             </p>
           </div>
+          </div>
         </div>
-        
-        <div className=" flex w-full  justify-end mt-2 gap-2">
-          <button className=" bg-red-600  text-white font-bold py-2 px-4 rounded hover:bg-red-500 transition duration-300">
+
+        <div className=" flex w-full text-sm  justify-between md:justify-end items-center mt-2 gap-2">
+          <button
+            onClick={() => handleDelete(Hotel._id)}
+            className=" bg-red-600  text-white font-bold py-2 px-4 rounded hover:bg-red-500 transition duration-300"
+          >
             Delete
           </button>
-        <Link to={`/HotelDetails/${Hotel._id}`} state={Hotel._id}>
-          <button className=" bg-blue-950  text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
-            View Details
-          </button>
+          <Link to={`/HotelDetails/${Hotel._id}`} state={Hotel._id}>
+            <button 
+            className=" bg-blue-950  text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+              View Details
+            </button>
           </Link>
         </div>
-        
       </div>
     </div>
   );
